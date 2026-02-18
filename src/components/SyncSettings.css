@@ -1,0 +1,125 @@
+.sync-settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.sync-settings {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.sync-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 2px solid #ecf0f1;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.sync-settings-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.sync-settings-body {
+  padding: 1.5rem;
+}
+
+.setting-section {
+  margin-bottom: 2rem;
+}
+
+.setting-section:last-child {
+  margin-bottom: 0;
+}
+
+.setting-section h3 {
+  margin: 0 0 0.5rem 0;
+  color: #34495e;
+  font-size: 1.1rem;
+}
+
+.setting-section .description {
+  margin: 0.5rem 0;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.code-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #6b4423;
+  margin-top: 1rem;
+}
+
+.code-display .code {
+  flex: 1;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6b4423;
+  letter-spacing: 0.5rem;
+  font-family: monospace;
+}
+
+.status-active {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.danger-zone {
+  border-top: 2px solid #f8d7da;
+  padding-top: 1.5rem;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+@media (max-width: 640px) {
+  .sync-settings {
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .code-display {
+    flex-direction: column;
+  }
+
+  .code-display .code {
+    font-size: 1.5rem;
+    letter-spacing: 0.3rem;
+  }
+}

@@ -1,0 +1,94 @@
+.sync-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.sync-synced {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.sync-syncing {
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+.sync-offline {
+  background: #e2e3e5;
+  border: 1px solid #d6d8db;
+  color: #383d41;
+}
+
+.sync-error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.sync-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.sync-syncing .sync-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sync-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.sync-status {
+  font-weight: 600;
+}
+
+.sync-time {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.sync-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  opacity: 0.6;
+  transition: all 0.2s;
+  color: inherit;
+}
+
+.sync-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+@media (max-width: 640px) {
+  .sync-indicator {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .sync-time {
+    font-size: 0.7rem;
+  }
+}
