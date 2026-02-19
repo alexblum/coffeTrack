@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, useMemo, type FormEvent } from 'react';
 import type { Drink } from '../types/drink';
 import { DRINK_TYPES } from '../types/drink';
 import { generateId } from '../utils/generateId';
@@ -9,9 +9,10 @@ interface DrinkFormProps {
   onCancel?: () => void;
   initialData?: Drink;
   isEdit?: boolean;
+  existingDrinks?: Drink[];
 }
 
-export function DrinkForm({ onSubmit, onCancel, initialData, isEdit = false }: DrinkFormProps) {
+export function DrinkForm({ onSubmit, onCancel, initialData, isEdit = false, existingDrinks = [] }: DrinkFormProps) {
   const [formData, setFormData] = useState({
     drinkType: initialData?.drinkType || '',
     coffeeBean: initialData?.coffeeBean || '',
@@ -24,6 +25,35 @@ export function DrinkForm({ onSubmit, onCancel, initialData, isEdit = false }: D
     rating: initialData?.rating || 5,
     review: initialData?.review || '',
   });
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  // Extract unique coffee bean values from existing drinks (case-insensitive)
+  const coffeeBeanSuggestions = useMemo(() => {
+    const beans = new Map<string, string>(); // lowercase -> original
+    existingDrinks.forEach(drink => {
+      if (drink.coffeeBean) {
+        const lowerBean = drink.coffeeBean.toLowerCase().trim();
+        if (!beans.has(lowerBean)) {
+          beans.set(lowerBean, drink.coffeeBean.trim());
+        }
+      }
+    });
+    return Array.from(beans.values()).sort();
+  }, [existingDrinks]);
+
+  // Filter suggestions based on current input
+  const filteredSuggestions = useMemo(() => {
+    if (!formData.coffeeBean) return coffeeBeanSuggestions;
+    const input = formData.coffeeBean.toLowerCase();
+    return coffeeBeanSuggestions.filter(bean => 
+      bean.toLowerCase().includes(input)
+    );
+  }, [coffeeBeanSuggestions, formData.coffeeBean]);
+
+  const handleSuggestionClick = (bean: string) => {
+    setFormData({ ...formData, coffeeBean: bean });
+    setShowSuggestions(false);
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -83,16 +113,38 @@ export function DrinkForm({ onSubmit, onCancel, initialData, isEdit = false }: D
         </select>
       </div>
 
-      <div className="form-group">
+      <div className="form-group autocomplete-container">
         <label htmlFor="coffeeBean">Сорт/бренд кофе *</label>
         <input
           type="text"
           id="coffeeBean"
           value={formData.coffeeBean}
-          onChange={(e) => setFormData({ ...formData, coffeeBean: e.target.value })}
+          onChange={(e) => {
+            setFormData({ ...formData, coffeeBean: e.target.value });
+            setShowSuggestions(true);
+          }}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           placeholder="Например: Lavazza Crema e Gusto"
           required
+          autoComplete="off"
         />
+        {showSuggestions && filteredSuggestions.length > 0 && (
+          <ul className="suggestions-list">
+            {filteredSuggestions.map((bean) => (
+              <li
+                key={bean}
+                className="suggestion-item"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  handleSuggestionClick(bean);
+                }}
+              >
+                {bean}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div className="form-group">

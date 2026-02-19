@@ -134,6 +134,7 @@ function App() {
               <DrinkForm 
                 onSubmit={handleAddDrink}
                 onCancel={() => setCurrentView('list')}
+                existingDrinks={drinks}
               />
             </>
           )}
@@ -151,6 +152,7 @@ function App() {
                 onCancel={handleCancelEdit}
                 initialData={selectedDrink}
                 isEdit
+                existingDrinks={drinks}
               />
             </>
           )}
