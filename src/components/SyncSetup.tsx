@@ -63,7 +63,7 @@ export function SyncSetup({ onComplete, onSkip }: SyncSetupProps) {
 
   if (mode === 'new' && generatedCode) {
     return (
-      <div className="sync-setup">
+      <div className="sync-setup modal">
         <div className="sync-setup-content">
           <h2>Ваш код доступа создан!</h2>
           <div className="code-display">
@@ -85,7 +85,7 @@ export function SyncSetup({ onComplete, onSkip }: SyncSetupProps) {
 
   if (mode === 'existing') {
     return (
-      <div className="sync-setup">
+      <div className="sync-setup modal">
         <div className="sync-setup-content">
           <h2>Введите код доступа</h2>
           <p>Введите 6-значный код с другого устройства</p>
@@ -123,18 +123,17 @@ export function SyncSetup({ onComplete, onSkip }: SyncSetupProps) {
   return (
     <div className="sync-setup">
       <div className="sync-setup-content">
-        <h2>Настройка синхронизации</h2>
-        <p>Синхронизируйте данные между устройствами с помощью простого кода доступа</p>
-        
+        <div className="sync-banner-text">
+          <h2>☁️ Синхронизация</h2>
+          <p>Синхронизируйте данные между устройствами</p>
+        </div>
         <div className="sync-options">
           <button 
             className="sync-option-btn"
             onClick={handleCreateNew}
             disabled={loading}
           >
-            <span className="icon">🆕</span>
-            <span className="title">Создать новый код</span>
-            <span className="description">Для первого устройства</span>
+            {loading ? 'Создание...' : 'Создать код'}
           </button>
 
           <button 
@@ -142,19 +141,17 @@ export function SyncSetup({ onComplete, onSkip }: SyncSetupProps) {
             onClick={() => setMode('existing')}
             disabled={loading}
           >
-            <span className="icon">🔗</span>
-            <span className="title">У меня есть код</span>
-            <span className="description">Подключить другое устройство</span>
+            Ввести код
           </button>
+
+          {onSkip && (
+            <button className="skip-btn" onClick={onSkip} disabled={loading}>
+              ✕
+            </button>
+          )}
         </div>
 
         {error && <p className="error-text">{error}</p>}
-
-        {onSkip && (
-          <button className="skip-btn" onClick={onSkip} disabled={loading}>
-            Пропустить (работать без синхронизации)
-          </button>
-        )}
       </div>
     </div>
   );

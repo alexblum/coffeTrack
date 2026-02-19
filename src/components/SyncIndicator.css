@@ -1,40 +1,52 @@
 .sync-indicator {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sync-trigger {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  justify-content: center;
   border-radius: 8px;
-  font-size: 0.9rem;
+  cursor: pointer;
   transition: all 0.2s;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 1.25rem;
+  color: white;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.sync-synced {
-  background: #d4edda;
-  border: 1px solid #c3e6cb;
-  color: #155724;
+.sync-trigger:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
 }
 
-.sync-syncing {
-  background: #d1ecf1;
-  border: 1px solid #bee5eb;
-  color: #0c5460;
+.sync-trigger:active {
+  transform: scale(0.95);
 }
 
-.sync-offline {
-  background: #e2e3e5;
-  border: 1px solid #d6d8db;
-  color: #383d41;
+.sync-synced .sync-trigger {
+  border-color: rgba(40, 167, 69, 0.5);
+  background: rgba(40, 167, 69, 0.2);
 }
 
-.sync-error {
-  background: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
+.sync-syncing .sync-trigger {
+  border-color: rgba(23, 162, 184, 0.5);
+  background: rgba(23, 162, 184, 0.2);
 }
 
-.sync-icon {
-  font-size: 1.2rem;
-  font-weight: bold;
+.sync-offline .sync-trigger {
+  border-color: rgba(108, 117, 125, 0.5);
+  background: rgba(108, 117, 125, 0.2);
+}
+
+.sync-error .sync-trigger {
+  border-color: rgba(220, 53, 69, 0.5);
+  background: rgba(220, 53, 69, 0.2);
 }
 
 .sync-syncing .sync-icon {
@@ -50,45 +62,101 @@
   }
 }
 
-.sync-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.sync-status {
-  font-weight: 600;
-}
-
-.sync-time {
-  font-size: 0.75rem;
-  opacity: 0.8;
-}
-
-.sync-btn {
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  padding: 0.25rem;
-  opacity: 0.6;
+.sync-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
   transition: all 0.2s;
-  color: inherit;
+  touch-action: manipulation;
 }
 
-.sync-btn:hover {
+.sync-indicator:hover .sync-tooltip,
+.sync-tooltip.show {
   opacity: 1;
-  transform: scale(1.1);
+  visibility: visible;
+  transform: translateY(0);
 }
 
-@media (max-width: 640px) {
-  .sync-indicator {
-    font-size: 0.85rem;
-    padding: 0.5rem 0.75rem;
+.sync-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-left: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+  transform: rotate(45deg);
+}
+
+.sync-tooltip-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sync-tooltip-status {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #2c3e50;
+}
+
+.sync-tooltip-time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.sync-tooltip-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #495057;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+
+.sync-tooltip-btn:hover {
+  background: #e9ecef;
+}
+
+.sync-tooltip-btn:active {
+  background: #dee2e6;
+}
+
+@media (max-width: 480px) {
+  .sync-trigger {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
   }
 
-  .sync-time {
-    font-size: 0.7rem;
+  .sync-tooltip {
+    right: -4px;
+    min-width: 200px;
+    max-width: calc(100vw - 2rem);
+    padding: 0.75rem;
+  }
+
+  .sync-tooltip::before {
+    right: 10px;
   }
 }

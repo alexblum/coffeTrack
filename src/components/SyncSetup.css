@@ -1,4 +1,85 @@
 .sync-setup {
+  background: linear-gradient(135deg, #6b4423 0%, #8b5a2b 100%);
+  color: white;
+  padding: 0.75rem 1rem;
+}
+
+.sync-setup-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sync-setup-content h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sync-setup-content > p {
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.sync-options {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sync-option-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sync-option-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sync-option-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sync-option-btn .icon,
+.sync-option-btn .title,
+.sync-option-btn .description {
+  display: none;
+}
+
+.sync-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.skip-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+}
+
+.skip-btn:hover:not(:disabled) {
+  color: white;
+}
+
+.sync-setup.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,69 +93,24 @@
   padding: 1rem;
 }
 
-.sync-setup-content {
+.sync-setup.modal .sync-setup-content {
   background: white;
   border-radius: 12px;
   padding: 2rem;
   max-width: 500px;
   width: 100%;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  color: #2c3e50;
+  display: block;
 }
 
-.sync-setup-content h2 {
-  margin: 0 0 0.5rem 0;
-  color: #2c3e50;
+.sync-setup.modal .sync-setup-content h2 {
   font-size: 1.75rem;
+  margin: 0 0 0.5rem 0;
 }
 
-.sync-setup-content > p {
+.sync-setup.modal .sync-setup-content > p {
   margin: 0 0 2rem 0;
-  color: #7f8c8d;
-}
-
-.sync-options {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.sync-option-btn {
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.sync-option-btn:hover:not(:disabled) {
-  border-color: #6b4423;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(107, 68, 35, 0.2);
-}
-
-.sync-option-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.sync-option-btn .icon {
-  font-size: 2rem;
-}
-
-.sync-option-btn .title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2c3e50;
-}
-
-.sync-option-btn .description {
-  font-size: 0.9rem;
   color: #7f8c8d;
 }
 
@@ -126,16 +162,16 @@
   border-color: #6b4423;
 }
 
-.error-text {
-  color: #e74c3c;
-  background: #fee;
-  padding: 0.75rem;
+.sync-setup .error-text {
+  background: rgba(231, 76, 60, 0.2);
+  color: #ffcccc;
+  padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  margin: 1rem 0;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  margin: 0;
 }
 
-.skip-btn {
+.sync-setup.modal .skip-btn {
   width: 100%;
   padding: 0.75rem;
   background: none;
@@ -147,17 +183,46 @@
   margin-top: 1rem;
 }
 
-.skip-btn:hover:not(:disabled) {
+.sync-setup.modal .skip-btn:hover:not(:disabled) {
   color: #2c3e50;
 }
 
-.skip-btn:disabled {
+.sync-setup.modal .skip-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 @media (max-width: 640px) {
+  .sync-setup {
+    padding: 0.5rem 0.75rem;
+  }
+
   .sync-setup-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .sync-banner-text {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .sync-setup-content h2 {
+    font-size: 0.875rem;
+  }
+
+  .sync-setup-content > p {
+    font-size: 0.75rem;
+  }
+
+  .sync-option-btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .sync-setup.modal .sync-setup-content {
     padding: 1.5rem;
   }
 

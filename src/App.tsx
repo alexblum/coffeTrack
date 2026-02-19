@@ -87,21 +87,30 @@ function App() {
               <h1>☕ Coffee Track</h1>
               <p className="subtitle">Отслеживайте свои кофейные напитки</p>
             </div>
-            {isSupabaseConfigured() && getSyncConfig().enabled && (
-              <button 
-                className="settings-btn"
-                onClick={() => setShowSyncSettings(true)}
-                title="Настройки синхронизации"
-              >
-                ⚙️
-              </button>
-            )}
+            <div className="header-actions">
+              {isSupabaseConfigured() && getSyncConfig().enabled && (
+                <SyncIndicator syncStatus={syncStatus} onSync={forceSync} />
+              )}
+              {isSupabaseConfigured() && getSyncConfig().enabled && (
+                <button 
+                  className="settings-btn"
+                  onClick={() => setShowSyncSettings(true)}
+                  title="Настройки синхронизации"
+                >
+                  ⚙️
+                </button>
+              )}
+            </div>
           </div>
-          {isSupabaseConfigured() && getSyncConfig().enabled && (
-            <SyncIndicator syncStatus={syncStatus} onSync={forceSync} />
-          )}
         </div>
       </header>
+
+      {showSyncSetup && (
+        <SyncSetup 
+          onComplete={handleSyncSetupComplete}
+          onSkip={handleSyncSetupSkip}
+        />
+      )}
 
       <main className="app-main">
         <div className="container">
@@ -164,13 +173,6 @@ function App() {
           drink={selectedDrink}
           onClose={handleCloseDetails}
           onEdit={handleEditClick}
-        />
-      )}
-
-      {showSyncSetup && (
-        <SyncSetup 
-          onComplete={handleSyncSetupComplete}
-          onSkip={handleSyncSetupSkip}
         />
       )}
 
